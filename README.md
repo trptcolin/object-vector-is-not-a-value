@@ -4,6 +4,8 @@ The error message `object Vector is not a value` suggests (according to [a set o
 
 But where? This is a fresh project with no dependencies, as far as I can tell.
 
+I do realize this error doesn't affect everyone, so I'm wondering what could be different about my external-to-this-project setup that makes this issue non-repeatable.
+
 I've tried:
 - Uninstall/reinstall SBT (via Homebrew)
 - `rm -rf ./target`
