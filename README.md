@@ -6,6 +6,12 @@ But where? This is a fresh project with no dependencies, as far as I can tell.
 
 I do realize this error doesn't affect everyone, so I'm wondering what could be different about my external-to-this-project setup that makes this issue non-repeatable.
 
+These things make it work:
+- Making `Vector` package-qualified to be `scala.collection.immutable.Vector`
+- Adding a real package (not the default package)
+
+This is really a learning exercise, since I have a workaround for the actual use case.
+
 I've tried:
 - Uninstall/reinstall SBT (via Homebrew)
 - `rm -rf ./target`
@@ -32,5 +38,4 @@ colin:hello/ (master) $ sbt clean run
 [error] (compile:compile) Compilation failed
 [error] Total time: 3 s, completed Oct 11, 2016 3:42:40 PM
 ```
-
 
