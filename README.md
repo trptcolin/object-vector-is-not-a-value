@@ -155,4 +155,3 @@ Refer to JEP 220 for details (http://openjdk.java.net/jeps/220).
 Error: Could not create the Java Virtual Machine.
 Error: A fatal exception has occurred. Program will exit.
 ```
-c
