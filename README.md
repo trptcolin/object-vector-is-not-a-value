@@ -135,3 +135,24 @@ So this explains why:
 - it only affects the default package (goes away when I add a package declaration)
 
 It doesn't explain to me why it worked in the REPL - maybe Scala types get precedence over Java classes in the interpreter somehow?
+
+If you're wondering where your Java extensions live, look no further than the system property `java.ext.dirs`, which you can find with:
+
+```
+colin:~/ $ java -XshowSettings:all -version 2>&1 | less
+```
+
+Incidentally, it looks like extensions are deprecated: https://bugs.openjdk.java.net/browse/JDK-8065702
+
+You can check whether this might affect you by running the following:
+
+```
+colin:~/ $ java -XX:+CheckEndorsedAndExtDirs -version
+Non-empty extension directory: /Users/colin/Library/Java/Extensions
+Non-empty extension directory: /System/Library/Java/Extensions
+Endorsed standards override mechanism and extension mechanism will not be supported in a future release.
+Refer to JEP 220 for details (http://openjdk.java.net/jeps/220).
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+```
+c
