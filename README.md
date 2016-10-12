@@ -4,11 +4,12 @@ The error message `object Vector is not a value` suggests (according to [a set o
 
 But where? This is a fresh project with no dependencies, as far as I can tell.
 
-I do realize this error doesn't affect everyone, so I'm wondering what could be different about my external-to-this-project setup that makes this issue non-repeatable.
+I do realize this error doesn't affect everyone (and I'm able to get it working in an Ubuntu VM), so I'm wondering what could be different about my external-to-this-project setup that makes this issue non-repeatable.
 
 These things make it work:
-- Making `Vector` package-qualified to be `scala.collection.immutable.Vector`
-- Adding a real package (not the default package)
+- Making `Vector` package-qualified to be `scala.collection.immutable.Vector` (see comments in `src/main/scala/hw.scala`)
+- Adding a real package declaration (instead of the default package - see the comments in `src/main/scala/hw.scala`)
+- Running the scala REPL and doing a `:load "./src/main/scala/hw.scala"`
 
 This is really a learning exercise, since I have a workaround for the actual use case.
 
@@ -17,6 +18,7 @@ I've tried:
 - `rm -rf ./target`
 - `sbt clean`
 - `rm -rf ~/.sbt`
+- using both Java 1.7 and 1.8
 
 with no change to the behavior below:
 
