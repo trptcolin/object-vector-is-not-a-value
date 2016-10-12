@@ -109,6 +109,7 @@ Searched for "Vector" in that gist, found
 
 A Coursera algorithms class had me put this jar there back in 2012, and it's got this mysterious Vector class.
 All its classes lives in the default package.
+[Java Extensions](https://docs.oracle.com/javase/tutorial/ext/) are something I'd totally forgotten about.
 
 So this explains why:
 - it's limited to my machine (probably few others have this extension installed)
