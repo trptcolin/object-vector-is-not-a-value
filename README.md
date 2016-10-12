@@ -39,3 +39,37 @@ colin:hello/ (master) $ sbt clean run
 [error] Total time: 3 s, completed Oct 11, 2016 3:42:40 PM
 ```
 
+Going a step further, via the stream files I found listed under `./target` via:
+
+```
+colin:hello/ (master) $ find target/streams/compile/ -type f| xargs cat
+```
+
+I found a `scalac` invocation that also exhibits the problem for me:
+
+```
+colin:object-vector-is-not-a-value/ (master) $ scalac -bootclasspath /Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/classes:/Users/colin/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar -classpath /Users/colin/Practice/object-vector-is-not-a-value/target/scala-2.11/classes /Users/colin/Practice/object-vector-is-not-a-value/src/main/scala/hw.scala
+/Users/colin/Practice/object-vector-is-not-a-value/src/main/scala/hw.scala:9: error: object Vector is not a value
+    val xs = Vector(1,2,3)
+             ^
+one error found
+```
+
+No change if I:
+- downgrade to `jdk1.7.0_45` instead
+- move everything from the bootclasspath to the classpath
+- remove everything else from the classpath except the custom code
+
+Things *do* work if I replace `Vector` with `Set`, presumably since that's explicitly brought into scope via the [Predef](http://www.scala-lang.org/files/archive/api/2.11.8/#scala.Predef$).
+
+Updated smallest reproduced case:
+
+```
+colin:object-vector-is-not-a-value/ (master) $ scalac -version
+Scala compiler version 2.11.8 -- Copyright 2002-2016, LAMP/EPFL
+colin:object-vector-is-not-a-value/ (master) $ scalac ./src/main/scala/hw.scala
+./src/main/scala/hw.scala:10: error: object Vector is not a value
+    val xs = Vector(1,2,3)
+             ^
+one error found
+```
